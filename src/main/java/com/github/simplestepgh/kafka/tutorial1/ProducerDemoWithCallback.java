@@ -20,25 +20,27 @@ public class ProducerDemoWithCallback {
         // 2.a) Create the Producer
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 
-        // 2.b) Create a Producer record
-        ProducerRecord<String, String> record = new ProducerRecord<String, String>("first_topic", "hello world");
+        for (int i = 0; i < 10; i++) {
+            // 2.b) Create a Producer record
+            ProducerRecord<String, String> record = new ProducerRecord<String, String>("first_topic", "hello world " + i);
 
-        // 3. Send data (asynchronously)
-        producer.send(record, new Callback() {
-            public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-                // executed every time a record is successfully sent or an exception is thrown
-                if (e == null) {
-                    // the record was successfully sent
-                    logger.info("Received new metadata: \n" +
+            // 3. Send data (asynchronously)
+            producer.send(record, new Callback() {
+                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                    // executed every time a record is successfully sent or an exception is thrown
+                    if (e == null) {
+                        // the record was successfully sent
+                        logger.info("Received new metadata: \n" +
                                 "Topic: \t" + recordMetadata.topic() + "\n" +
                                 "Partition: \t" + recordMetadata.partition() + "\n" +
                                 "Offset: \t" + recordMetadata.offset() + "\n" +
                                 "Timestamp: \t" + recordMetadata.timestamp());
-                } else {
-                    logger.error("Error while producing message", e);
+                    } else {
+                        logger.error("Error while producing message", e);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         // Flush data
         producer.flush();;
