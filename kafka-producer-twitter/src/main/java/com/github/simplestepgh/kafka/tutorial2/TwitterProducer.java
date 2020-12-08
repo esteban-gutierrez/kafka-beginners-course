@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TwitterProducer {
     private static Logger logger = LoggerFactory.getLogger(TwitterProducer.class);
-    private static final String CONFIG_PROPERTIES = "src/main/resources/config.properties";
+    private static final String CONFIG_PROPERTIES = "kafka-producer-twitter/src/main/resources/config.properties";
     private static final String CONSUMER_KEY = "twitter.consumer.key";
     private static final String CONSUMER_SECRET = "twitter.consumer.secret";
     private static final String TOKEN = "twitter.token";
